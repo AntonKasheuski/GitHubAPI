@@ -1,0 +1,14 @@
+.main {
+    height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F9F9F9;
+}
+
+.main img {
+    width: 65px;
+    height: 68px;
+    margin: 30px;
+}

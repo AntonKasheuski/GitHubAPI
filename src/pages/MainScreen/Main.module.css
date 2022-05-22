@@ -1,0 +1,133 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    height: 92vh;
+}
+.userBlock {
+    width: 33vw;
+    background-color: #F9F9F9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.userData {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.avatar {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    margin: 40px 0 40px 0;
+}
+.login {
+    color: #0064EB;
+    text-decoration: none;
+}
+.followingBlock {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+}
+.follo {
+    display: flex;
+    flex-direction: row;
+}
+.followersIcon {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+}
+.followerIcon {
+    width: 15px;
+    height: 15px;
+    padding-top: 1px;
+    margin-right: 3px;
+    margin-left: 20px;
+}
+
+.reposBlock {
+    width: 67vw;
+    background-color: #F9F9F9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.userRepos {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+}
+.repo {
+    width: 95%;
+    height: 100px;
+    background-color: white;
+    margin: 15px 0 15px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-radius: 6px;
+}
+.repoName {
+    font-size: x-large;
+    color: #0064EB;
+    text-decoration: none;
+    margin-left: 25px;
+}
+.repoDescription {
+    margin-left: 25px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .avatar {
+        width: 200px;
+        height: 200px;
+    }
+    .followingBlock {
+        flex-direction: column;
+        align-items: start;
+        justify-content: space-between;
+        margin-left: 0;
+        height: 50px;
+    }
+    .followerIcon {
+        margin-left: 0;
+    }
+}
+@media only screen and (max-width: 700px) {
+    .userBlock {
+        width: 100vw;
+        flex-direction: row;
+        justify-content: center;
+    }
+    .userData {
+        flex-direction: row;
+    }
+    .avatar {
+        margin: 20px 20px 0 0;
+    }
+    .followingBlock {
+        margin-top: 10px;
+    }
+    .main {
+        flex-direction: column;
+    }
+    .reposBlock {
+        width: 100vw;
+    }
+    .userRepos {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+@media only screen and (max-width: 380px) {
+    .userData {
+        flex-direction: column;
+    }
+    .avatar {
+        margin: 20px 0 0 0;
+    }
+}
