@@ -1,27 +1,32 @@
 enum AppActionType {
-    SET_IS_LOADER = 'AppActionType/SET_IS_LOADER',
+    USER_IS_LOADING = 'AppActionType/USER_IS_LOADING',
+    REPOS_IS_LOADING = 'AppActionType/REPOS_IS_LOADING',
     USER_SEARCHING_RESULT = 'AppActionType/USER_SEARCHING_RESULT',
     SET_CURRENT_PAGE = 'AppActionType/SET_CURRENT_PAGE',
 }
 
 type InitialStateType = {
-    isLoading: boolean
+    usersIsLoading: boolean
+    reposIsLoading: boolean
     isFind: string
     currentPage: number
 }
 
 const initialState: InitialStateType = {
-    isLoading: false,
+    usersIsLoading: false,
+    reposIsLoading: false,
     isFind: '',
     currentPage: 1,
 }
 
-type AppReducerActionType = SetIsLoadingType | UserSearchingActionType | setCurrentPageActionType;
+type AppReducerActionType = UserIsLoadingType | ReposIsLoadingType | UserSearchingActionType | SetCurrentPageActionType;
 
 export const appReducer = (state: InitialStateType = initialState, action: AppReducerActionType): InitialStateType => {
     switch (action.type) {
-        case AppActionType.SET_IS_LOADER:
-            return {...state, isLoading: action.payload.isLoading}
+        case AppActionType.USER_IS_LOADING:
+            return {...state, usersIsLoading: action.payload.usersIsLoading}
+        case AppActionType.REPOS_IS_LOADING:
+            return {...state, reposIsLoading: action.payload.reposIsLoading}
         case AppActionType.USER_SEARCHING_RESULT:
             return {...state, isFind: action.payload.isFind}
         case AppActionType.SET_CURRENT_PAGE:
@@ -31,12 +36,21 @@ export const appReducer = (state: InitialStateType = initialState, action: AppRe
     }
 }
 
-export type SetIsLoadingType = ReturnType<typeof setIsLoaderAC>;
-export const setIsLoaderAC = (isLoading: boolean) => {
+export type UserIsLoadingType = ReturnType<typeof userIsLoadingAC>;
+export const userIsLoadingAC = (usersIsLoading: boolean) => {
     return {
-        type: AppActionType.SET_IS_LOADER,
+        type: AppActionType.USER_IS_LOADING,
         payload: {
-            isLoading,
+            usersIsLoading,
+        },
+    } as const
+}
+export type ReposIsLoadingType = ReturnType<typeof reposIsLoadingAC>;
+export const reposIsLoadingAC = (reposIsLoading: boolean) => {
+    return {
+        type: AppActionType.REPOS_IS_LOADING,
+        payload: {
+            reposIsLoading,
         },
     } as const
 }
@@ -49,7 +63,7 @@ export const userSearchingResultAC = (isFind: string) => {
         },
     } as const
 }
-export type setCurrentPageActionType = ReturnType<typeof setCurrentPageAC>;
+export type SetCurrentPageActionType = ReturnType<typeof setCurrentPageAC>;
 export const setCurrentPageAC = (page: number) => {
     return {
         type: AppActionType.SET_CURRENT_PAGE,

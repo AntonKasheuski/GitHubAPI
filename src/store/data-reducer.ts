@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {API, RepoResponseType, UserResponseType} from "../api/api";
-import {setIsLoaderAC, userSearchingResultAC} from "./app-reducer";
+import {reposIsLoadingAC, userIsLoadingAC, userSearchingResultAC} from "./app-reducer";
 
 enum DataActionType {
     SET_USER = 'DataActionType/SET_USER',
@@ -75,33 +75,22 @@ export const setCurrentPageAC = (currentPage: number) => {
 }
 
 export const getUserTC = (userName: string) => (dispatch: Dispatch) => {
-    dispatch(setIsLoaderAC(true))
+    dispatch(userIsLoadingAC(true))
     dispatch(setCurrentPageAC(1))
     API.getUser(userName)
         .then(res => {
             dispatch(setUserAC(res.login, res.avatar_url, res.html_url, res.name, res.public_repos, res.followers, res.following))
             dispatch(userSearchingResultAC('userIsFound'))
-            API.getRepos(userName, 4, 1)
-                .then(res => {
-                    const repos = res.map(r => {
-                        return {
-                            id: r.id,
-                            name: r.name,
-                            html_url: r.html_url,
-                            description: r.description
-                        }
-                    })
-                    dispatch(setReposAC(repos))
-                    dispatch(setIsLoaderAC(false))
-                })
+            dispatch(userIsLoadingAC(false))
         })
         .catch(() => {
-            dispatch(setIsLoaderAC(false));
+            dispatch(userIsLoadingAC(false))
             dispatch(userSearchingResultAC('userNotFound'))
         })
 }
 
 export const getReposTC = (userName: string, per_page: number, page: number) => (dispatch: Dispatch) => {
+    dispatch(reposIsLoadingAC(true))
     API.getRepos(userName, per_page, page)
         .then(res => {
             const repos = res.map(r => {
@@ -113,5 +102,6 @@ export const getReposTC = (userName: string, per_page: number, page: number) => 
                 }
             })
             dispatch(setReposAC(repos))
+            dispatch(reposIsLoadingAC(false))
         })
 }

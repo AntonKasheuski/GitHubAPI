@@ -9,6 +9,7 @@ import {ThunkDispatch} from "redux-thunk";
 import {AnyAction} from "redux";
 
 function Items(props: { currentItems: RepoResponseType[] }) {
+
     return (
         <>
             {props.currentItems && props.currentItems.map(r =>
@@ -23,7 +24,8 @@ function Items(props: { currentItems: RepoResponseType[] }) {
                         href={r.html_url}
                     >{r.name}</a>
                     <div className={s.repoDescription}>{r.description}</div>
-                </div>)}
+                </div>)
+            }
         </>
     )
 }
@@ -42,28 +44,34 @@ export const PaginatedRepos = (props: { itemsPerPage: number }) => {
         dispatch(setCurrentPageAC(event.selected + 1))
     }
 
+    const startItemOnPage = props.itemsPerPage * (data.currentPage - 1) + 1
+    const endItemOnPage = data.currentPage * props.itemsPerPage < data.public_repos
+        ? data.currentPage * props.itemsPerPage
+        : data.public_repos
+
     return (
         <>
             <Items currentItems={data.repos}/>
-            <ReactPaginate
-                nextLabel="next >"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={3}
-                marginPagesDisplayed={2}
-                pageCount={pageCount}
-                previousLabel="< previous"
-                pageClassName="page-item"
-                pageLinkClassName="page-link"
-                previousClassName="page-item"
-                previousLinkClassName="page-link"
-                nextClassName="page-item"
-                nextLinkClassName="page-link"
-                breakLabel="..."
-                breakClassName="page-item"
-                breakLinkClassName="page-link"
-                containerClassName="pagination"
-                activeClassName="active"
-            />
+            <div className={s.paginateContainer}>
+                <div className={s.itemsCount}>
+                    {startItemOnPage} - {endItemOnPage} of {data.public_repos} items
+                </div>
+                <ReactPaginate
+                    nextLabel={">"}
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={1}
+                    pageCount={pageCount}
+                    previousLabel={"<"}
+                    pageClassName={s.pageItem}
+                    previousClassName={s.pageItem}
+                    nextClassName={s.pageItem}
+                    breakLabel={"..."}
+                    breakClassName={s.pageItem}
+                    containerClassName={s.pagination}
+                    activeClassName={s.active}
+                />
+            </div>
         </>
-    );
+    )
 }

@@ -15,7 +15,8 @@ import {UserNotFound} from "./pages/UserNotFoundScreen/UserNotFound";
 import {Loader} from "./features/Loader/Loader";
 
 function App() {
-    const isLoading = useSelector<AppRootStateType, boolean>(state => state.app.isLoading)
+    const usersIsLoading = useSelector<AppRootStateType, boolean>(state => state.app.usersIsLoading)
+    const reposIsLoading = useSelector<AppRootStateType, boolean>(state => state.app.reposIsLoading)
     const dispatch = useDispatch<ThunkDispatch<AppRootStateType, {}, AnyAction>>()
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -35,7 +36,8 @@ function App() {
                     <img src={searchIcon} alt={'searchIcon'} />
                 </div>
             </div>
-            {isLoading && <Loader/>}
+            {usersIsLoading && <Loader type={"usersIsLoading"}/>}
+            {reposIsLoading && <Loader type={"reposIsLoading"}/>}
             <Routes>
                 <Route path="/" element={<Navigate replace to="/initial"/>}/>
                 <Route path={'/initial'} element={<Initial/>}/>
