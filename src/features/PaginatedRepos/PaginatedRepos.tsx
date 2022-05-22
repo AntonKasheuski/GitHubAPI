@@ -26,8 +26,7 @@ function Items(props: { currentItems: RepoResponseType[] }) {
     );
 }
 
-export const PaginatedItems = (props: { itemsPerPage: number }) => {
-    debugger
+export const PaginatedRepos = (props: { itemsPerPage: number }) => {
     const data = useSelector<AppRootStateType, DataInitialStateType>(state => state.data)
 
     const items = data.repos;

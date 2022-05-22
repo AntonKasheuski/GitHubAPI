@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {API, RepoResponseType, UserResponseType} from "../api/api";
-import {setIsLoader, userSearchingResultAC} from "./app-reducer";
+import {setIsLoaderAC, userSearchingResultAC} from "./app-reducer";
 
 enum DataActionType {
     SET_USER = 'DataActionType/SET_USER',
@@ -59,7 +59,7 @@ export const setReposAC = (repos: RepoResponseType[]) => {
 }
 
 export const getUserTC = (userName: string) => (dispatch: Dispatch) => {
-    dispatch(setIsLoader(true));
+    dispatch(setIsLoaderAC(true));
     API.getUser(userName)
         .then(res => {
             dispatch(setUserAC(res.login, res.avatar_url, res.html_url, res.name, res.public_repos, res.followers, res.following))
@@ -75,11 +75,11 @@ export const getUserTC = (userName: string) => (dispatch: Dispatch) => {
                         }
                     })
                     dispatch(setReposAC(repos))
-                    dispatch(setIsLoader(false));
+                    dispatch(setIsLoaderAC(false));
                 })
         })
         .catch(() => {
-            dispatch(setIsLoader(false));
+            dispatch(setIsLoaderAC(false));
             dispatch(userSearchingResultAC('userNotFound'))
         })
 }
