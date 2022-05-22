@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {RepoResponseType} from "../../api/api";
-import s from "../../pages/MainScreen/Main.module.css";
+import s from "./PaginatedRepos.module.css";
 import ReactPaginate from "react-paginate";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
-import {DataInitialStateType} from "../../store/data-reducer";
+import {DataInitialStateType, getReposTC, setCurrentPageAC} from "../../store/data-reducer";
+import {ThunkDispatch} from "redux-thunk";
+import {AnyAction} from "redux";
 
 function Items(props: { currentItems: RepoResponseType[] }) {
     return (
@@ -23,39 +25,26 @@ function Items(props: { currentItems: RepoResponseType[] }) {
                     <div className={s.repoDescription}>{r.description}</div>
                 </div>)}
         </>
-    );
+    )
 }
 
 export const PaginatedRepos = (props: { itemsPerPage: number }) => {
     const data = useSelector<AppRootStateType, DataInitialStateType>(state => state.data)
+    const dispatch = useDispatch<ThunkDispatch<AppRootStateType, {}, AnyAction>>()
 
-    const items = data.repos;
-
-    // We start with an empty list of items.
-    const [currentItems, setCurrentItems] = useState<RepoResponseType[]>([]);
-    const [pageCount, setPageCount] = useState(0);
-    // Here we use item offsets; we could also use page offsets
-    // following the API or data you're working with.
-    const [itemOffset, setItemOffset] = useState(0);
+    const pageCount = Math.ceil(data.public_repos / props.itemsPerPage)
 
     useEffect(() => {
-        // Fetch items from another resources.
-        const endOffset = itemOffset + props.itemsPerPage;
-        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-        setCurrentItems(items.slice(itemOffset, endOffset));
-        setPageCount(Math.ceil(items.length / props.itemsPerPage));
-    }, [itemOffset, props.itemsPerPage, items]);
+        data.login && dispatch(getReposTC(data.login, props.itemsPerPage, data.currentPage))
+    }, [dispatch, data.login, data.currentPage, props.itemsPerPage]);
 
-    // Invoke when user click to request another page.
-    const handlePageClick = (event: { selected: number; }) => {
-        const newOffset = event.selected * props.itemsPerPage % items.length;
-        console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
-        setItemOffset(newOffset);
-    };
+    const handlePageClick = (event: { selected: number }) => {
+        dispatch(setCurrentPageAC(event.selected + 1))
+    }
 
     return (
         <>
-            <Items currentItems={currentItems}/>
+            <Items currentItems={data.repos}/>
             <ReactPaginate
                 nextLabel="next >"
                 onPageChange={handlePageClick}

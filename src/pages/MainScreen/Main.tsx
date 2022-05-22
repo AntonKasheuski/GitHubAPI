@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
 import {DataInitialStateType} from "../../store/data-reducer";
@@ -6,8 +6,6 @@ import {Navigate} from "react-router-dom";
 import s from "./Main.module.css";
 import followerIcon from "./../../img/follower.png";
 import followersIcon from "./../../img/followers.png";
-import {RepoResponseType} from "../../api/api";
-import ReactPaginate from "react-paginate";
 import {PaginatedRepos} from "../../features/PaginatedRepos/PaginatedRepos";
 
 export const Main = () => {

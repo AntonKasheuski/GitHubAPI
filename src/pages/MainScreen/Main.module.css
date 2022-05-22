@@ -60,25 +60,6 @@
     align-items: start;
     width: 100%;
 }
-.repo {
-    width: 95%;
-    height: 100px;
-    background-color: white;
-    margin: 15px 0 15px 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    border-radius: 6px;
-}
-.repoName {
-    font-size: x-large;
-    color: #0064EB;
-    text-decoration: none;
-    margin-left: 25px;
-}
-.repoDescription {
-    margin-left: 25px;
-}
 
 @media only screen and (max-width: 1000px) {
     .avatar {

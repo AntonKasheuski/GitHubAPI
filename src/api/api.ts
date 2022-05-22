@@ -9,8 +9,8 @@ export const API = {
         return instance.get<UserResponseType>(`users/${userName}`)
             .then(res => res.data)
     },
-    getRepos(userName: string) {
-        return instance.get<RepoResponseType[]>(`users/${userName}/repos`, {params: {per_page: 100}})
+    getRepos(userName: string, per_page: number, page: number) {
+        return instance.get<RepoResponseType[]>(`users/${userName}/repos`, {params: {per_page, page}})
             .then(res => res.data)
     }
 }
