@@ -6,14 +6,13 @@ import {AppRootStateType} from "../../store/store";
 import {Navigate} from "react-router-dom";
 
 export const UserNotFound = () => {
-    const isFind = useSelector<AppRootStateType, string>(state => state.app.isFind)
-    const login = useSelector<AppRootStateType, string>(state => state.data.login)
+    const userIsFind = useSelector<AppRootStateType, string>(state => state.app.userIsFind)
 
-    if (isFind === 'userIsFound') {
+    if (userIsFind === 'userIsFound') {
         return <Navigate to={'/main'}/>
     }
-    if (login === '') {
-        return <Navigate to={'/initial'}/>
+    if (userIsFind === '') {
+        return <Navigate to={'/main'}/>
     }
 
     return (

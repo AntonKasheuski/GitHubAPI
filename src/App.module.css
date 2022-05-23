@@ -13,12 +13,29 @@
 .inputWrapper {
   position: relative;
 }
-.inputWrapper input {
+.input {
   width: 500px;
   height: 40px;
   border-radius: 6px;
   padding-left: 55px;
 }
+
+@keyframes fade {
+  from { opacity: 1.0; }
+  50% { opacity: 0.5; }
+  to { opacity: 1.0; }
+}
+@-webkit-keyframes fade {
+  from { opacity: 1.0; }
+  50% { opacity: 0.5; }
+  to { opacity: 1.0; }
+}
+.error {
+  animation: fade 200ms infinite;
+  -webkit-animation: fade 200ms infinite;
+  animation-iteration-count: 3;
+}
+
 .inputWrapper img {
   position: absolute;
   width: 17px;

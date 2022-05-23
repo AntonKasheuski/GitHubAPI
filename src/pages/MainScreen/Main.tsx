@@ -7,9 +7,11 @@ import s from "./Main.module.css";
 import followerIcon from "./../../img/follower.png";
 import followersIcon from "./../../img/followers.png";
 import {PaginatedRepos} from "../../features/PaginatedRepos/PaginatedRepos";
+import {ReposNotFound} from "../ReposNotFoundScreen/ReposNotFound";
 
 export const Main = () => {
-    const isFind = useSelector<AppRootStateType, string>(state => state.app.isFind)
+    const userIsFind = useSelector<AppRootStateType, string>(state => state.app.userIsFind)
+    const reposIsFind = useSelector<AppRootStateType, string>(state => state.app.reposIsFind)
     const data = useSelector<AppRootStateType, DataInitialStateType>(state => state.data)
 
     const numberToShow = (number: number) => {
@@ -20,7 +22,7 @@ export const Main = () => {
         }
     }
 
-    if (isFind === 'userNotFound') {
+    if (userIsFind === 'userNotFound') {
         return <Navigate to={'/userNotFound'}/>
     }
     if (data.login === '') {
@@ -68,10 +70,12 @@ export const Main = () => {
                 </div>
             </div>
             <div className={s.reposBlock}>
-                <div className={s.userRepos}>
-                    <h1>Repositories ({data.public_repos})</h1>
-                    <PaginatedRepos itemsPerPage={4}/>
-                </div>
+                {reposIsFind === 'reposNotFound'
+                    ? <ReposNotFound/>
+                    : <div className={s.userRepos}>
+                        <h1>Repositories ({data.public_repos})</h1>
+                        <PaginatedRepos itemsPerPage={4}/>
+                    </div>}
             </div>
         </div>
     );

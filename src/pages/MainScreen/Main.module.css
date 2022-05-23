@@ -50,6 +50,7 @@
 
 .reposBlock {
     width: 67vw;
+    height: 100%;
     background-color: #F9F9F9;
     display: flex;
     flex-direction: column;

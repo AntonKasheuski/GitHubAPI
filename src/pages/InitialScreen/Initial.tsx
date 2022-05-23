@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
 
 export const Initial = () => {
-    const isFind = useSelector<AppRootStateType, string>(state => state.app.isFind)
+    const isFind = useSelector<AppRootStateType, string>(state => state.app.userIsFind)
 
     if (isFind === 'userIsFound') {
         return <Navigate to={'/main'}/>

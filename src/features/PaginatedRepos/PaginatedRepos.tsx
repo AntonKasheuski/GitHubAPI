@@ -57,6 +57,7 @@ export const PaginatedRepos = (props: { itemsPerPage: number }) => {
                     {startItemOnPage} - {endItemOnPage} of {data.public_repos} items
                 </div>
                 <ReactPaginate
+                    forcePage={data.currentPage - 1}
                     nextLabel={">"}
                     onPageChange={handlePageClick}
                     pageRangeDisplayed={3}
